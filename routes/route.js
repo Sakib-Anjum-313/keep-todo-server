@@ -11,17 +11,22 @@ import {
 
 const route = express.Router();
 
+//POST 
 route.post("/addNewTodo/:email", addNewTodo);
-route.get("/getAllTodos/:email", getAllTodos);
-route.get("/getAllTodos/:email/:id", toggleTodoDone);
+
+// PUT
 route.put("/editedTodo/:id", updateTodo);
-route.delete("/deleteTodo/:id", deleteTodo);
 
-
-
+// GET
+route.get("/getAllTodos/:email", getAllTodos);
+route.get("/toggleATodo/:id", toggleTodoDone);
 route.get("/activeTodos/:email", activeTodo);
 route.get("/doneTodos/:email", doneTodo);
 
+//DELETE
+route.delete("/deleteTodo/:id", deleteTodo);
+
+// route.delete("/removeDoneTodos/:email", removeDoneTodos);
 
 
 export default route;

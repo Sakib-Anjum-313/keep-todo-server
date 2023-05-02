@@ -2,7 +2,7 @@ import Todo from "../model/Todo.js";
 
 export const addNewTodo = async (req, res) => {
   try {
-    console.log(req.body);
+   // console.log(req.body);
     const email = req.params.email;
     const newTodo = await Todo.create({
       email: email,
@@ -29,9 +29,8 @@ export const getAllTodos = async (req, res) => {
 };
 
 export const toggleTodoDone = async (req, res) => {
-  console.log(req.params);
   const id = req.params.id;
-  const email = req.params.email;
+  //console.log(id);
   try {
     const previousTodo = await Todo.findById(id);
     // console.log(todoRef);
@@ -54,7 +53,7 @@ export const toggleTodoDone = async (req, res) => {
 export const updateTodo = async (req, res) => {
   const id = req.params.id;
   const todoText = req.body.todoText;
-  console.log(id, todoText);
+  //console.log(id, todoText);
   try {
     const previousTodo = await Todo.findById(id);
     // console.log(todoRef);
@@ -75,7 +74,7 @@ export const updateTodo = async (req, res) => {
 };
 
 export const deleteTodo = async (req, res) => {
-  console.log(req.params);
+  // console.log(req.params);
   const id = req.params.id;
   try {
     const deletedTodo = await Todo.findOneAndDelete({ _id: id });
@@ -115,3 +114,18 @@ export const doneTodo = async (req, res) => {
     return res.status(500).json(error.message);
   }
 };
+
+
+// export const removeDoneTodos = async (req, res) => {
+//   // console.log();
+//   const email = req.params.email;
+//   console.log(email);
+//   try {
+//     const removeTodo = await Todo.findByIdAndDelete({ email: email, done: true });
+
+//     console.log(removeTodo);
+//     return res.status(200).json(removeTodo);
+//   } catch (error) {
+//     return res.status(500).json(error.message);
+//   }
+// };
