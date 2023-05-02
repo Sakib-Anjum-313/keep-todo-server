@@ -3,7 +3,9 @@ import Todo from "../model/Todo.js";
 export const addNewTodo = async (req, res) => {
   try {
     console.log(req.body);
+    const email = req.params.email;
     const newTodo = await Todo.create({
+      email: email,
       data: req.body.newTodo,
       createdAt: Date.now(),
     });
@@ -17,7 +19,8 @@ export const addNewTodo = async (req, res) => {
 
 export const getAllTodos = async (req, res) => {
   try {
-    const todos = await Todo.find({}).sort({ createdAt: -1 });
+    const email = req.params.email;
+    const todos = await Todo.find({email: email}).sort({ createdAt: -1 });
 
     return res.status(200).json(todos);
   } catch (error) {
@@ -28,6 +31,7 @@ export const getAllTodos = async (req, res) => {
 export const toggleTodoDone = async (req, res) => {
   console.log(req.params);
   const id = req.params.id;
+  const email = req.params.email;
   try {
     const previousTodo = await Todo.findById(id);
     // console.log(todoRef);
@@ -78,6 +82,35 @@ export const deleteTodo = async (req, res) => {
 
     // console.log(todoRef);
     return res.status(200).json({ message: "successful" });
+  } catch (error) {
+    return res.status(500).json(error.message);
+  }
+};
+
+
+export const activeTodo = async (req, res) => {
+  // console.log();
+  const email = req.params.email;
+
+  try {
+    const activeTodo = await Todo.find({email:email, done: false}).sort({ createdAt: -1 });
+
+    // console.log(todoRef);
+    return res.status(200).json(activeTodo);
+  } catch (error) {
+    return res.status(500).json(error.message);
+  }
+};
+
+
+export const doneTodo = async (req, res) => {
+  // console.log();
+  const email = req.params.email;
+  try {
+    const doneTodo = await Todo.find({email:email, done: true }).sort({ createdAt: -1 });
+
+    // console.log(todoRef);
+    return res.status(200).json(doneTodo);
   } catch (error) {
     return res.status(500).json(error.message);
   }
